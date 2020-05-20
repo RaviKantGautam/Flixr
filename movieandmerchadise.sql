@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 10, 2020 at 06:41 PM
+-- Generation Time: May 17, 2020 at 01:58 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -42,7 +42,7 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`email`, `password`, `type`, `mobile`, `otp`) VALUES
 ('a12@gmail.com', 'admin', 'Admin', 9876543456, 'None'),
-('a@gmail.com', 'demo', 'Super-Admin', 1234567899, NULL),
+('a@gmail.com', '123', 'Super-Admin', 1234567899, NULL),
 ('annn@gmail.com', 'admin', 'Admin', 7340761885, 'None'),
 ('batejurago@mailinator.com', 'Pa$$w0rd!', 'Admin', 8532130, NULL),
 ('bunyluka@mailinator.com', 'Pa$$w0rd!', 'Super-Admin', 4524078501, NULL),
@@ -61,10 +61,11 @@ INSERT INTO `admin` (`email`, `password`, `type`, `mobile`, `otp`) VALUES
 ('kudunote@mailinator.com', 'Pa$$w0rd!', 'Super-Admin', 1968405583, NULL),
 ('lapafaferi@mailinator.net', 'Pa$$w0rd!', 'Admin', 5375198622, NULL),
 ('pa@gmal.com', '123', 'Admin', 7340761885, NULL),
-('ramesh@gmail.com', '123', 'Admin', 6280276218, 'None'),
-('ravikantgautamjazz@gmail.com', '123', 'Super-Admin', 6280276218, 'None'),
+('ramesh@gmail.com', 'demo', 'Admin', 6280276218, 'None'),
+('ravikantgautamjazz@gmail.com', 'demo', 'Super-Admin', 6280276218, 'None'),
 ('recyf@mailinator.com', 'Pa$$w0rd!', 'Super-Admin', 16094991838, NULL),
 ('sofiz@mailinator.com', 'Pa$$w0rd!', 'Super-Admin', 9891157911, NULL),
+('sonia@gmail.com', 'demo', 'Super-Admin', 6280276218, 'None'),
 ('terubamewa@mailinator.net', 'Pa$$w0rd!', 'Admin', 3049911789, NULL),
 ('zyban@mailinator.com', 'Pa$$w0rd!', 'Super-Admin', 1136074877, NULL);
 
@@ -125,7 +126,8 @@ INSERT INTO `bill` (`billID`, `datatime`, `grandtotal`, `payment_method`, `city`
 (26, '2020-05-10 04:25:23', '364', 'cod', 'Chandigarh', 429752, 'Optio aut et esse a', 'Incididunt voluptati', 'ravikantgautamjazz@gmail.com', 'Dispatched', 'Kabir', 312345, 'Todd Hyde Associates', NULL, 'https://www.tazeripuroxicir.mobi'),
 (27, '2020-05-10 04:26:25', '364', 'cod', 'Chandigarh', 429752, 'Optio aut et esse a', 'Incididunt voluptati', 'ravikantgautamjazz@gmail.com', 'Dispatched', 'rajan', 312345, 'Todd Hyde Associates', NULL, 'https://www.tazeripuroxicir.mobi'),
 (28, '2020-05-10 04:34:58', '364', 'cod', 'Chandigarh', 429752, 'Optio aut et esse a', 'Incididunt voluptati', 'ravikantgautamjazz@gmail.com', 'Dispatched', 'SRK', 312345, 'Todd Hyde Associates', NULL, 'https://www.tazeripuroxicir.mobi'),
-(29, '2020-05-10 16:19:28', '2078', 'cod', 'Jalandhar', 843766, 'Quaerat ullamco cill', 'Quaerat hic placeat', 'ravikantgautamjazz@gmail.com', 'cancelled', NULL, NULL, NULL, 'not enough money', NULL);
+(29, '2020-05-10 16:19:28', '2078', 'cod', 'Jalandhar', 843766, 'Quaerat ullamco cill', 'Quaerat hic placeat', 'ravikantgautamjazz@gmail.com', 'cancelled', NULL, NULL, NULL, 'not enough money', NULL),
+(30, '2020-05-11 05:14:59', '1774', 'cod', 'Jalandhar', 654495, 'Ut velit fugiat esse', 'Error quaerat commod', 'ravikantgautamjazz@gmail.com', 'pending', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -183,7 +185,9 @@ INSERT INTO `billdetail` (`billdetailid`, `price`, `quantity`, `merchandise`, `b
 (35, 141.00, 364, 107, 27),
 (36, 141.00, 364, 107, 28),
 (37, 282.00, 250, 110, 29),
-(38, 204.00, 1828, 112, 29);
+(38, 204.00, 1828, 112, 29),
+(39, 283.00, 1090, 104, 30),
+(40, 236.00, 684, 105, 30);
 
 -- --------------------------------------------------------
 
@@ -215,7 +219,8 @@ INSERT INTO `booking` (`id`, `showtimeid`, `seats`, `grandtotal`, `noofseats`, `
 (7, 11, '66,67', 180000.00, 2, 'client@gmail.com', '2020-05-06 16:00:05'),
 (8, 11, '31,45', 1800.00, 2, 'ravikantgautamjazz@gmail.com', '2020-05-09 07:26:28'),
 (9, 11, '29,30', 1800.00, 2, 'ravikantgautamjazz@gmail.com', '2020-05-10 16:21:38'),
-(10, 11, '29,30', 1800.00, 2, 'ravikantgautamjazz@gmail.com', '2020-05-10 16:23:20');
+(10, 11, '29,30', 1800.00, 2, 'ravikantgautamjazz@gmail.com', '2020-05-10 16:23:20'),
+(11, 7, '22,23', 1980.00, 2, 'ravikantgautamjazz@gmail.com', '2020-05-11 05:23:28');
 
 -- --------------------------------------------------------
 
@@ -265,8 +270,8 @@ CREATE TABLE `merchandise` (
 
 INSERT INTO `merchandise` (`productid`, `productname`, `price`, `stock`, `movieid`, `productdescription`, `photo1`, `photo2`, `photo3`) VALUES
 (103, 'Mugs', 649, 191, 872, 'Playing in robes of black and yellow, you can now support your house Quidditch team with this matching tee from Harry Potter. Complete with the Hogwart\'s crest over the left-hand side and silver lettering decorating the back, this marvellous tee will look totally patriotic from the towering stands! Official merchandise.', '60015product-9.jpg', '27250fashion-fashionable-footwear-leather-267301.jpg', '67793footwear-leather-shoes-wear-267320.jpg'),
-(104, 'Puma', 545, 283, 873, 'Playing in robes of black and yellow, you can now support your house Quidditch team with this matching tee from Harry Potter. Complete with the Hogwart\'s crest over the left-hand side and silver lettering decorating the back, this marvellous tee will look totally patriotic from the towering stands! Official merchandise.', '14188product-7.jpg', '78714Daddys_Lil_Monster_-_mug-min_280x.webp', '32145product15.jpg'),
-(105, 'Puma', 114, 236, 860, 'Playing in robes of black and yellow, you can now support your house Quidditch team with this matching tee from Harry Potter. Complete with the Hogwart\'s crest over the left-hand side and silver lettering decorating the back, this marvellous tee will look totally patriotic from the towering stands! Official merchandise.', '17533close-up-photography-of-red-and-black-nike-running-shoe-786003.jpg', '94427product9.jpg', '28712product-13.jpg'),
+(104, 'Puma', 545, 281, 873, 'Playing in robes of black and yellow, you can now support your house Quidditch team with this matching tee from Harry Potter. Complete with the Hogwart\'s crest over the left-hand side and silver lettering decorating the back, this marvellous tee will look totally patriotic from the towering stands! Official merchandise.', '14188product-7.jpg', '78714Daddys_Lil_Monster_-_mug-min_280x.webp', '32145product15.jpg'),
+(105, 'Puma', 114, 230, 860, 'Playing in robes of black and yellow, you can now support your house Quidditch team with this matching tee from Harry Potter. Complete with the Hogwart\'s crest over the left-hand side and silver lettering decorating the back, this marvellous tee will look totally patriotic from the towering stands! Official merchandise.', '17533close-up-photography-of-red-and-black-nike-running-shoe-786003.jpg', '94427product9.jpg', '28712product-13.jpg'),
 (106, 'Mugs', 895, 216, 856, 'Playing in robes of black and yellow, you can now support your house Quidditch team with this matching tee from Harry Potter. Complete with the Hogwart\'s crest over the left-hand side and silver lettering decorating the back, this marvellous tee will look totally patriotic from the towering stands! Official merchandise.', '37110product-1.jpg', '95391category4.png', '44309product-6.jpg'),
 (107, 'necklace', 182, 139, 858, 'Playing in robes of black and yellow, you can now support your house Quidditch team with this matching tee from Harry Potter. Complete with the Hogwart\'s crest over the left-hand side and silver lettering decorating the back, this marvellous tee will look totally patriotic from the towering stands! Official merchandise.', '2262834.jpg', '90084product-18.jpg', '93191photo-of-nike-shoes-1598505.jpg'),
 (108, 'Cooper Hogan', 145, 218, 863, 'Playing in robes of black and yellow, you can now support your house Quidditch team with this matching tee from Harry Potter. Complete with the Hogwart\'s crest over the left-hand side and silver lettering decorating the back, this marvellous tee will look totally patriotic from the towering stands! Official merchandise.', '2810121320028214_280x.webp', '1053339.jpg', '46236blog12.jpg'),
@@ -395,7 +400,8 @@ INSERT INTO `shows` (`id`, `showdate`, `movieid`) VALUES
 (9, '2020-05-08', 862),
 (11, '2020-05-05', 855),
 (12, '2020-05-08', 860),
-(13, '2020-05-05', 871);
+(13, '2020-05-05', 871),
+(14, '2020-05-07', 871);
 
 -- --------------------------------------------------------
 
@@ -421,7 +427,9 @@ INSERT INTO `showtimings` (`id`, `audi`, `price`, `showtime`, `showid`) VALUES
 (8, 'Audi-1', 200, '13:59:00', 9),
 (10, 'Audi-2', 400, '23:00:00', 9),
 (11, 'Audi-1', 900, '13:59:00', 11),
-(13, 'Audi-2', 100, '11:58:00', 13);
+(13, 'Audi-2', 100, '11:58:00', 13),
+(15, 'Audi-2', 100, '13:58:00', 14),
+(16, 'Audi-1', 300, '12:59:00', 14);
 
 -- --------------------------------------------------------
 
@@ -501,7 +509,7 @@ INSERT INTO `ticket_category` (`id`, `categoryname`, `price`, `threatreid`) VALU
 (3, 'Ground hall', 800, 1),
 (13, 'Balcony', 100, 1),
 (14, 'Basic', 300, 1),
-(20, 'Balcony', 49, 4),
+(20, 'Balcony', 50, 4),
 (21, 'preimium', 106, 4),
 (22, 'Middle Hall', 281, 5),
 (23, 'Balcony', 58, 4),
@@ -658,19 +666,19 @@ ALTER TABLE `ticket_category`
 -- AUTO_INCREMENT for table `bill`
 --
 ALTER TABLE `bill`
-  MODIFY `billID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `billID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `billdetail`
 --
 ALTER TABLE `billdetail`
-  MODIFY `billdetailid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `billdetailid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `merchandise`
@@ -694,13 +702,13 @@ ALTER TABLE `seating`
 -- AUTO_INCREMENT for table `shows`
 --
 ALTER TABLE `shows`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `showtimings`
 --
 ALTER TABLE `showtimings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `theatres`
