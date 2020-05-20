@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {% include 'adminHeader.html' %}
+    <title>Theatre View</title>
+</head>
+<body style="background: rgba(174,104,0,0.15)">
+{% include 'theatrenavbar.html' %}
+<div class="container p-2 rounded mt-5"
+     style="box-shadow: -10px 0 30px black;background: linear-gradient(white 70%,#d7e6ff)">
+    <div class="m-3 text-center">
+        <h1>Add Show</h1>
+        <form id="addshow" action="addShow" method="post" class="p-4 w-100"
+              style="border: 3px double orangered;display: inline-block">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-4">
+                    <select name="movieid" id="movieid" class="form-control">
+                        <optgroup label="Select Movie"></optgroup>
+                        {% for i in movie %}
+                            <option value="{{ i.0 }}">{{ i.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <select name="audi" id="audi" class="form-control">
+                        <option value="Audi-1">Audi-1</option>
+                        <option value="Audi-2">Audi-2</option>
+                        <option value="Audi-3">Audi-3</option>
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control Date" placeholder="Pick Release Date" id="showdate"
+                           name="showdate">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <input type="number" required name="price" id="price" placeholder="Price &#8377;" class="form-control">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <input type="text" required name="showtime" placeholder="Show Time" id="showtime" class="form-control timepicker">
+                    </div>
+                </div>
+            </div>
+            <hr class="bg-info">
+            <div class="form-group text-center">
+                <input type="submit" class="btn btn-outline-primary w-50" value=">> SUBMIT >>">
+            </div>
+            <div id="addshowerror"></div>
+        </form>
+    </div>
+    <table class="table table-bordered text-center">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Show Date</th>
+            <th scope="col">Audi</th>
+            <th scope="col">Price &#8377;</th>
+            <th scope="col">Show Time</th>
+            <th scope="col">Movie</th>
+            <th scope="col" colspan="2">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for k in data %}
+            <tr>
+                <td>{{ k.id }}</td>
+                <td>{{ k.showdate }}</td>
+                <td>{{ k.audi }}</td>
+                <td>{{ k.price }}</td>
+                <td>{{ k.showtime }}</td>
+                <td>{{ k.moviename }}</td>
+                <td>
+                    <button class="btn btn-primary" onclick='editmodal("{{ k.id }}")'><i class="fa fa-edit"></i>
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" onclick="window.location.href='deleteshow?id={{ k.id }}'"><i
+                            class="fa fa-trash"></i></button>
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Show</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editshow" action="editShow" method="post" class="p-4 w-100"
+                      style="border: 3px double orangered;display: inline-block">
+                    {% csrf_token %}
+                    <input type="hidden" id="id" name="id">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <select name="movieid" id="movieidedit" class="form-control">
+                                {% for i in movie %}
+                                    <option value="{{ i.0 }}">{{ i.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <select name="audi" id="audiedit" class="form-control">
+                                <option value="Audi-1">Audi-1</option>
+                                <option value="Audi-2">Audi-2</option>
+                                <option value="Audi-3">Audi-3</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control Date" placeholder="Pick Release Date"
+                                   id="showdateedit"
+                                   name="showdate">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="text" required name="price" id="priceedit" placeholder="Price &#8377;" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="bg-info">
+                    <div class="form-group text-center">
+                        <input type="submit" class="btn btn-outline-primary w-50" value=">> SUBMIT >>">
+                    </div>
+                    <div id="addshowerror"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'myjs/theatreshow.js' %}"></script>
+{% include 'adminNavbarfoot.html' %}
+</body>
+</html>

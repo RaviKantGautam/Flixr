@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="{% static 'img/logo.png' %}" type="image/png"
+    <title>Flixr</title>
+    <style>
+        .list li:hover {
+        {#transition: .5s ease-in;#} border-bottom: 2px solid blue;
+        }
+
+        .mybtn {
+            padding: 1rem;
+            float: right;
+            font-size: 1.2rem;
+            background: #eed30cc4;
+            border: none;
+            border-radius: 6px;
+            font-weight: 800;
+        }
+
+        .mybtn:hover {
+            transition: ease-in 290ms;
+            box-shadow: 0 5px 11px grey;
+            border-radius: unset;
+            border: 1px solid #eed30cc4;
+        }
+    </style>
+    <!-- Bootstrap CSS -->
+</head>
+
+<body>
+{% include 'clientNavbar.html' %}
+<!--================Header Menu Area =================-->
+
+<!--================Home Banner Area =================-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content text-center">
+                <h2>Shop Your Trending Product</h2>
+                <div class="page_link">
+                    <a href="index.html">Home</a>
+                    <a href="allmovie">Movies</a>
+                    <a href="#">Gallery</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Home Banner Area =================-->
+
+<!--================Category Product Area =================-->
+<section class="cat_product_area section_gap">
+    <div class="container-fluid">
+        <div class="row flex-row-reverse">
+            <div class="col-lg-9">
+<div class="text-center text-light display-4 font-weight-bolder" style="text-decoration: underline greenyellow">Products</div>
+                <div class="latest_product_inner row">
+                    {% for i in context %}
+                        <div class="col-lg-3 col-md-3 col-sm-6">
+                            <div class="f_p_item">
+                                <div class="f_p_img">
+                                    <img class="img-fluid imshow" src="{% static 'media/' %}{{ i.photo1 }}" alt="">
+                                    <div class="p_icon">
+                                        <a href="productdetail?id={{ i.productid }}">
+                                            <i class="fa fa-info-circle"></i>
+                                        </a>
+                                        {#										<a href="#">#}
+                                        {#											<i class="lnr lnr-cart"></i>#}
+                                        {#										</a>#}
+                                    </div>
+                                </div>
+                                <a href="productdetail?id={{ i.productid }}">
+                                    <h4>{{ i.productname }}</h4>
+                                </a>
+                                <h5>&#8377; {{ i.price }}</h5>
+                                {% if i.stock > 0 %}
+                                    <p class="text-success"><i class="fa fa-check-circle"></i> In Stock</p>
+                                {% else %}
+                                    <p class="text-danger"><i class="fa fa-times-circle"></i> Out of Stock</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+                <hr class="bg-danger">
+
+                <div class="row w-75 p-3" style="box-shadow: 0 0 7px gray">
+                    <div class="col-sm-3 p-0 m-0">
+                        <img src="{% static 'media/' %}{{ movie.3 }}" class="img-fluid imshow" alt="">
+                    </div>
+                    <div class="col-sm-9">
+                        <h1>{{ movie.1 }}</h1>
+                        <p><span class="text-secondary font-weight-bold"
+                                 style="color: white !important;">Genre</span>: {{ movie.7 }}
+                            {% if status.booking == 'nowavailable' %}
+                            {% elif status.booking == 'bookticket' %}
+                                <button class="mybtn"
+                                        onclick="window.location.href='bookticketpage?movieid={{ movie.0 }}&showid={{ status.showid }}'">
+                                    <i
+                                            class="fa fa-ticket"></i> Book
+                                    Ticket Now<i class="fa fa-ticket"></i></button>
+                            {% else %}
+                                <button class="mybtn"><i
+                                        class="fa fa-ticket"></i>{{ status.booking }}<i class="fa fa-ticket"></i>
+                                </button>
+                            {% endif %}
+                        </p>
+                        <p><span class="text-secondary font-weight-bold"
+                                 style="color: white !important;">Director</span>: {{ movie.4 }}</p>
+                        <p><span class="text-secondary font-weight-bold" style="color: white !important;">Production House</span>: {{ movie.5 }}
+                        </p>
+                        <p><span class="text-secondary font-weight-bold"
+                                 style="color: white !important;">Release Date</span>: {{ movie.6 }}</p>
+
+                    </div>
+                <p class="p-3"><span class="text-secondary font-weight-bold"
+                                 style="color: white !important;">Description</span>: {{ movie.2 }}</p>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="left_sidebar_area">
+                    <aside class="left_widgets cat_widgets">
+                        <div class="l_w_title" style="background: rgba(0,0,255,0.3);">
+                            <h3>Browse Movies</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul class="list" id="movielist"></ul>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% include 'clientFooter.html' %}
+
+<!--================ End footer Area  =================-->
+
+</body>
+
+</html>

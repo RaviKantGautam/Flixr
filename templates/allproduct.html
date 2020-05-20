@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% load static %}
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" href="{% static 'img/logo.png' %}" type="image/png"
+	<title>Flixr</title>
+
+</head>
+
+<body>
+{% include 'clientNavbar.html' %}
+	<!--================Home Banner Area =================-->
+	<section class="banner_area">
+		<div class="banner_inner d-flex align-items-center">
+			<div class="container">
+				<div class="banner_content text-center">
+					<h2>Pick Your Greatest Deal Over Here!!!</h2>
+					<div class="page_link">
+						<a href="/">Home</a>
+						<a href="allmovie">Movies</a>
+						<a href="#">Merchandise</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Home Banner Area =================-->
+
+	<!--================Category Product Area =================-->
+	<section class="cat_product_area section_gap">
+		<div class="container-fluid">
+			<div class="row flex-row-reverse">
+				<div class="col-lg-12">
+					<div class="latest_product_inner row">
+                        {% for i in context %}
+                        <div class="col-lg-3 col-md-3 col-sm-6">
+							<div class="f_p_item">
+								<div class="f_p_img">
+									<img class="img-fluid" src="{% static 'media/' %}{{ i.6 }}" alt="">
+									<div class="p_icon">
+										<a href="productdetail?id={{ i.0 }}">
+											<i class="fa fa-info-circle"></i>
+										</a>
+										<a onclick="sessionProduct('{{ i.0 }}')">
+											<i class="lnr lnr-cart"></i>
+										</a>
+									</div>
+								</div>
+								<a href="productdetail?id={{ i.0 }}">
+									<h4>{{ i.1 }}</h4>
+								</a>
+								<h5>&#8377; {{ i.2 }}</h5>
+                                {% if i.3 > 0 %}
+                                <p class="text-success"><i class="fa fa-check-circle"></i> In Stock</p>
+                                    {% else %}
+                                <p class="text-danger"><i class="fa fa-times-circle"></i> Out of Stock</p>
+                                {% endif %}
+							</div>
+						</div>
+                        {% endfor %}
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Category Product Area =================-->
+{% include 'clientFooter.html' %}
+</body>
+
+</html>

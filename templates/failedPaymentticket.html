@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="{% static 'img/logo.png' %}" type="image/png"
+    <title>Flixr</title>
+    <script src="{% static 'myjs/bookticketpage.js' %}"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        .seat {
+            color: black !important;
+            display: inline-block;
+            padding: 0;
+            margin: 0;
+        }
+
+        .seat p {
+            padding: 0 !important;
+            margin: 0 !important;
+            text-align: center;
+        }
+
+        .seat img {
+            width: 38px;
+            height: 30px;
+        }
+
+        .moviedate {
+            color: black;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 4px black;
+            margin: 20px !important;
+        }
+    </style>
+    <!-- Bootstrap CSS -->
+</head>
+
+<body>
+{% include 'clientNavbar.html' %}
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content text-center">
+                <h2>Shop Your Trending Product</h2>
+                <div class="page_link">
+                    <a href="index.html">Home</a>
+                    <a href="allmovie">Movies</a>
+                    <a href="#">Gallery</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br>
+<br>
+<br>
+<div class="display-4 p-5 text-center text-danger container font-weight-bolder" style="border: none;box-shadow: 0 0 30px gray">
+    <div>We Are Very Sorry </div>
+    <div>Try Again After Some Time</div>
+    <div class="text-muted">There is some Technical Issues</div>
+</div>
+<br>
+{% include 'clientFooter.html' %}
+</body>
+</html>

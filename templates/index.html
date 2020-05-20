@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="{% static 'img/cinema.svg' %}" type="image/png">
+    <title>Flixr</title>
+</head>
+
+<body>
+{% include 'clientNavbar.html' %}
+{% if message %}
+    <script>
+    alert('{{ message }}')
+    </script>
+{% endif %}
+
+<!--================Home Banner Area =================-->
+<section class="home_banner_area">
+    <div class="overlay"></div>
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content row">
+                <div class="offset-lg-2 col-lg-8">
+                    <div style="background: rgba(0,0,0,0.5);padding: 50px;font-size: 8rem;color: white;font-weight: bolder;letter-spacing: 30px">Flixr</div>
+                    <h3 style="color: #54ab4d;
+    background: antiquewhite;
+    text-decoration: underline;
+    text-decoration-color: salmon;">HomeTowm To Every Movie</h3>
+                    <a class="white_bg_btn" href="allmovie">View Collection</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Home Banner Area =================-->
+<!--================Hot Deals Area =================-->
+<section class="hot_deals_area section_gap" style="background: black;border-bottom: 5px solid white;padding: 50px 0;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="hot_deal_box">
+                    <img class="img-fluid" src="{% static 'img/product/hot_deals/deal1.jpg' %}" alt="">
+                    <div class="content">
+                        <h2>Pick The Hit Movie of This Month</h2>
+                        <p>Book now</p>
+                    </div>
+                    <a class="hot_deal_link" href="allmovie"></a>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="hot_deal_box">
+                    <img class="img-fluid" src="{% static 'img/product/hot_deals/deal1.jpg' %}" alt="">
+                    <div class="content">
+                        <h2>Catch Your Best Deal of This Month</h2>
+                        <p>shop now</p>
+                    </div>
+                    <a class="hot_deal_link" href="allproduct"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--================Feature Product Area =================-->
+<section class="feature_product_area" style="background: black;border-bottom: 5px solid white;padding: 50px 0;">
+    <div class="main_box">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="main_title">
+                    <h2>Featured Movies</h2>
+                    <p>Who are in extremely love with eco friendly system.</p>
+                </div>
+            </div>
+            <div class="row">
+                {% for i in movie %}
+                    <div class="col col1">
+                        <div class="f_p_item">
+                            <div class="f_p_img">
+                                <img class="img-fluid imshow" src="{% static 'media/' %}{{ i.2 }}" alt="">
+                                <div class="p_icon">
+                                    <a href="shopproductbymovie?id={{ i.0 }}" title="More Product">
+                                        {#										<i class="lnr lnr-heart"></i>#}
+                                        <i class="fa lnr fa-info-circle" title="More Product"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <a href="shopproductbymovie?id={{ i.0 }}">
+                                <h4>{{ i.1 }}</h4>
+                            </a>
+                            {#							<h5>$150.00</h5>#}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="text-center pt-4 pb-4" style="border-top: solid red 1px;border-bottom: solid red 1px ">
+                <a href="allmovie" class="btn btn btn-outline-light badge-pill w-50"><< --------- See More
+                    ------------- >> </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--================Feature Product Area =================-->
+<section class="feature_product_area section_gap" style="background: black;border-bottom: 5px solid white;padding: 50px 0;">
+    <div class="main_box">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="main_title">
+                    <h2>Featured Products</h2>
+                    <p>Who are in extremely love with eco friendly system.</p>
+                </div>
+            </div>
+            <div class="row">
+                {% for j in product %}
+                    <div class="col col1">
+                        <div class="f_p_item">
+                            <div class="f_p_img">
+                                <img class="img-fluid imshow" src="{% static 'media/' %}{{ j.2 }}" alt="">
+                                <div class="p_icon">
+                                    <a href="productdetail?id={{ j.0 }}" title="More Product">
+{#                                        										<i class="lnr lnr-heart"></i>#}
+                                        <i class="fa lnr fa-info-circle" title="More Product"></i>
+                                    </a>
+                                    <a onclick="sessionProduct('{{ j.0 }}')" title="Add To Cart"><i class="lnr lnr-cart"></i></a>
+                                </div>
+                            </div>
+                            <a href="productdetail?id={{ j.0 }}">
+                                <h4>{{ j.1 }}</h4>
+                            </a>
+
+                            {% if j.3 > 0 %}
+                                <p class="text-success"><i class="fa fa-check-circle"></i> In Stock</p>
+                                {% else %}
+                                <p class="text-danger"><i class="fa fa-times-circle"></i> Out of Stock</p>
+                            {% endif %}
+                            {#							<h5>$150.00</h5>#}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="text-center pt-4 pb-4" style="border-top: solid red 1px;border-bottom: solid red 1px ">
+                <a href="allproduct" class="btn btn btn-outline-light badge-pill w-50"><< --------- See More
+                    ------------- >> </a>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Feature Product Area =================-->
+{% include 'clientFooter.html' %}
+</body>
+
+</html>

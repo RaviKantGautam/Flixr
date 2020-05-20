@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {% include 'adminHeader.html' %}
+    <title>Theatre View</title>
+
+</head>
+<body style="background: rgba(174,104,0,0.15)">
+{% include 'theatrenavbar.html' %}
+<div class="container p-2 rounded mt-5"  style="box-shadow: -10px 0 30px black;background: linear-gradient(white 70%,#d7e6ff)">
+    <div class="m-3 text-center">
+        <h1>Welcome To The Theatre</h1>
+        <h4>Your Theatre id is {{ request.session.theatre.theatreid }}</h4>
+    </div>
+</div>
+
+{% include 'adminNavbarfoot.html' %}
+{#<script src="{% static 'myjs/theatreview.js' %}"></script>#}
+</body>
+</html>

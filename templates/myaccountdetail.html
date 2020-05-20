@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="{% static 'img/logo.png' %}" type="image/png"
+    <title>Flixr</title>
+</head>
+
+<body>
+
+{% include 'clientNavbar.html' %}
+<!--================Home Banner Area =================-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content text-center">
+                <h2>My Account Details</h2>
+                <div class="page_link">
+                    <a href="/">Home</a>
+                    <a href="#">Account Detail</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Home Banner Area =================-->
+
+<!--================Order Details Area =================-->
+<section class="order_details p_120">
+    <div class="container">
+        <div class="order_details_table">
+            <h2>Order Details</h2>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Bill No.</th>
+                        <th>Bill Date</th>
+                        <th>Address</th>
+                        <th>Payment Method</th>
+                        <th>Grand Total</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        {#                                                                                <td>{{ i.srno }}</td>#}
+                        <td>{{ i.billid }}</td>
+                        <td>{{ i.billtime }}</td>
+                        <td>{{ i.address }}</td>
+                        <td>{{ i.paymentmethod }}</td>
+                        <td>&#8377; {{ i.grandtotal }}</td>
+                        <td>{{ i.status }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+                <hr class="bg-dark">
+                <br>
+                <h2>Product Detail</h2>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Sr No.</th>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Net Price</th>
+                        <th>Product Image</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in context %}
+                        <tr>
+                            <td>{{ i.srno }}</td>
+                            <td>{{ i.product.1 }}</td>
+                            <td>{{ i.quantity }}</td>
+                            <td>&#8377; {{ i.price }}</td>
+                            <td><img src="{% static 'media/' %}{{ i.product.1 }}"
+                                                        alt="" class="image-fluid"
+                                                        style="width: 150px;height: 150px"></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        <button class="main_btn2" onclick="window.location.href='myaccount'"><< Go back</button>
+        </div>
+    </div>
+</section>
+{% include 'clientFooter.html' %}
+
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {% include 'adminHeader.html' %}
+    <title>Theatre View</title>
+</head>
+<body style="background: rgba(174,104,0,0.15)">
+{% include 'theatrenavbar.html' %}
+<div class="container p-2 rounded mt-5"  style="box-shadow: -10px 0 30px black;background: linear-gradient(white 70%,#d7e6ff)">
+    <div class="m-3 text-center">
+        <h1>Add Seats</h1>
+        <form id="addseat" method="post" class="p-4 w-100" style="border: 3px double orangered;display: inline-block">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-4">
+                    <input type="text" name="seatnumber" id="seatnumber" placeholder="Seat Number" class="form-control">
+                </div>
+                <div class="col-sm-4">
+                    <input type="number" min="1" max="1000" name="seatprice" id="seatprice" placeholder="Price Tag &#8377;" class="form-control">
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" name="auditoriumname" id="auditoriumname" placeholder="Auditorium Name" class="form-control">
+                </div>
+            </div>
+            <hr class="bg-info">
+            <div class="row mt-1">
+                <div class="col-sm-6">
+                    <input type="text" name="auditoriumkey" id="auditoriumkey" placeholder="Auditorium Key" class="form-control w-100">
+                </div>
+                <div class="col-sm-6">
+                    <input type="button" class="btn btn-outline-primary w-100" onclick="addseatsubmit()" value=">> SUBMIT >>"></div>
+            </div>
+            <div id="addseaterror"></div>
+        </form>
+    </div>
+    <table class="table table-bordered text-center">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Seat No.</th>
+            <th scope="col">Price</th>
+            <th scope="col">Auditorium Name</th>
+            <th scope="col">Auditorium Key</th>
+            <th scope="col" colspan="2">Action</th>
+        </tr>
+        </thead>
+        <tbody id="tabledataseat"></tbody>
+    </table>
+</div>
+{% include 'adminNavbarfoot.html' %}
+<script src="{% static 'myjs/theatreaddseat.js' %}"></script>
+</body>
+</html>

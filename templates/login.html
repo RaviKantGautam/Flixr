@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% load static %}
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" href="{% static 'img/logo.png' %}" type="image/png"
+    <title>Flixr</title>
+</head>
+
+<body>
+{% if message %}
+    <script>
+    alert('{{ message }}')
+    </script>
+{% endif %}
+{% include 'clientNavbar.html' %}
+	<!--================Home Banner Area =================-->
+	<section class="banner_area">
+		<div class="banner_inner d-flex align-items-center">
+			<div class="container">
+				<div class="banner_content text-center">
+					<h2>Login/Register</h2>
+					<div class="page_link">
+						<a href="/">Home</a>
+						<a href="#">Login</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Home Banner Area =================-->
+	<!--================Login Box Area =================-->
+	<section class="login_box_area p_120">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="login_box_img">
+						<img class="img-fluid" src="{% static 'media/food-snack-popcorn-movie-theater-33129.jpg' %}" alt="">
+						<div class="hover">
+							<h4>New to our website?</h4>
+							<p>There are advances being made in science and technology everyday, and a good example of this is the</p>
+							<a class="main_btn" href="clientRegistration">Create an Account</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6" style="background: rgb(255,255,255)">
+					<div class="login_form_inner">
+						<h3>Log in to enter</h3>
+						<form class="row login_form" action="clientLogin" method="post" id="clientLogin">
+							{% csrf_token %}
+                            <div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="name" required name="email" placeholder="Email">
+							</div>
+							<div class="col-md-12 form-group">
+								<input type="password" class="form-control" id="name"required name="passw" placeholder="Password">
+							</div>
+							<div class="col-md-12 form-group">
+								<button type="submit" value="submit" class="btn submit_btn">Log In</button>
+								<a data-toggle="modal" data-target="#forgetpassword" >Forgot Password?</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% include 'clientFooter.html' %}
+<script>
+    $(document).ready(function () {
+$('#clientLogin').validate();
+    })
+</script>
+
+<div class="modal" id="forgetpassword">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Forget Password</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="#">
+                    <input type="email" class="form-control" id="otpemail" placeholder="Enter Email.Otp will be send!">
+                    <p class="h1 text-center">or</p>
+                    <input type="tel" class="form-control" id="otpphone"
+                           placeholder="Enter phone number.Otp will be send!">
+                    <br>
+                    <div id="otperror"></div>
+                    <br>
+                    <button type="button" onclick="forgetpassword('client')"
+                            class="btn btn-outline-danger badge-pill w-100">continue
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    function forgetpassword(status) {
+        {#alert(status);#}
+        var formdata = new FormData();
+        var xml = new XMLHttpRequest();
+        var output = '';
+        if (status == 'client') {
+            if (document.getElementById('otpemail').value != "" && document.getElementById('otpphone').value != "") {
+                {#alert(document.getElementById('otpemail').value);#}
+                {#alert(document.getElementById('otpphone').value);#}
+                formdata.append('status',status);
+                formdata.append('email',document.getElementById('otpemail').value);
+                formdata.append('phone',document.getElementById('otpphone').value);
+                xml.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        output = this.response;
+                        {#alert(output);#}
+                        if (output == 'None') {
+                            document.getElementById('otperror').innerHTML = '<div class="alert alert-danger" role="alert">' + output + '</div>'
+
+                        } else {
+                            $('#forgetpassword').modal('hide');
+                            window.location.href = 'forgetpage'
+                        }
+                        // $('#mymodalchangepassword').modal('hide');
+                        // window.location.href = 'adminview';
+                    }
+                };
+                xml.open('POST', 'forgetpassword', true);
+                xml.send(formdata)
+
+            } else if (document.getElementById('otpemail').value != "") {
+                alert(document.getElementById('otpemail').value);
+                formdata.append('status',status);
+                formdata.append('email',document.getElementById('otpemail').value);
+                xml.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        output = this.response;
+                        if (output == 'None') {
+                            document.getElementById('otperror').innerHTML = '<div class="alert alert-danger" role="alert">' + output + '</div>'
+                        } else {
+                            $('#forgetpassword').modal('hide');
+                            window.location.href = 'forgetpage'
+                        }
+                        // $('#mymodalchangepassword').modal('hide');
+                        // window.location.href = 'adminview';
+                    }
+                };
+                xml.open('POST', 'forgetpassword', true);
+                xml.send(formdata)
+
+            } else if (document.getElementById('otpphone').value != "") {
+                alert(document.getElementById('otpphone').value);
+                formdata.append('status',status);
+                formdata.append('phone',document.getElementById('otpphone').value);
+                xml.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        output = this.response;
+                        if (output == 'None') {
+                            document.getElementById('otperror').innerHTML = '<div class="alert alert-danger" role="alert">' + output + '</div>'
+                        } else {
+                            $('#forgetpassword').modal('hide');
+                            window.location.href = 'forgetpage'
+                        }
+                        // $('#mymodalchangepassword').modal('hide');
+                        // window.location.href = 'adminview';
+                    }
+                };
+                xml.open('POST', 'forgetpassword', true);
+                xml.send(formdata)
+            } else {
+                document.getElementById('otperror').innerHTML = '<div class="alert alert-danger">Please Fill any field</div>'
+            }
+        }
+    }
+</script>
+</body>
+</html>

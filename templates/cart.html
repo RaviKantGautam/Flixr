@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="{% static 'img/logo.png' %}" type="image/png"
+    <title>ListAshop</title>
+</head>
+
+<body>
+
+{% include 'clientNavbar.html' %}
+<!--================Home Banner Area =================-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content text-center">
+                <h2>Feel Happy to Take Away!!!</h2>
+                <div class="page_link">
+                    <a href="/">Home</a>
+                    <a href="#">Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Home Banner Area =================-->
+
+<!--================Cart Area =================-->
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table table-light">
+                    <thead style="color: white!important;">
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if request.session.product %}
+                        {% for i in request.session.product %}
+                            <tr>
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img src="{% static 'media/' %}{{ i.6 }}" style="width: 100px;height: 100px"
+                                                 alt="">
+                                        </div>
+                                        <div class="media-body">
+                                            <p>{{ i.1 }}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>&#8377; {{ i.2 }}</h5>
+                                </td>
+                                <td>
+                                    <div class="product_count">
+                                        <input type="text" name="qty" readonly id="quantity-{{ i.0 }}" maxlength="12"
+                                               value="{{ i.9 }}"
+                                               title="Quantity:" class="input-text qty">
+                                        <button onclick="add({{ i.0 }},'plus',{{ i.3 }})"
+                                                class="increase items-count" id="minisicon-{{ i.0 }}" type="button">
+                                            <i class="lnr lnr-chevron-up"></i>
+                                        </button>
+                                        <button onclick="add({{ i.0 }},'minus',{{ i.3 }})"
+                                                class="reduced items-count" type="button" id="plusicon-{{ i.0 }}">
+                                            <i class="lnr lnr-chevron-down"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>&#8377; <span id="netprice-{{ i.0 }}">{{ i.10 }}</span></h5>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                    {% endif %}
+
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            <h5>Grand Total</h5>
+                        </td>
+                        <td>
+                            <h5>&#8377; <span id="grandtotal">{{ grandtotal }}</span></h5>
+                        </td>
+                    </tr>
+                    <tr class="out_button_area">
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            <div class="checkout_btn_inner">
+                                <a class="gray_btn" href="/">Continue Shopping</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="checkout_btn_inner">
+                                {% if request.session.client %}
+                                    <a class="main_btn" href="checkout">Proceed to checkout</a>
+                                {% else %}
+                                    <a class="main_btn" href="clientLogin">Proceed to checkout</a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="{% static 'myjs/cart.js' %}"></script>
+{% include 'clientFooter.html' %}
+</body>
+
+</html>

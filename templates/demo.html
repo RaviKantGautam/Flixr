@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Demo</title>
+    <link rel="stylesheet" href="{% static 'mycss/theatrelogin.css' %}">
+    {% include 'adminHeader.html' %}
+</head>
+<body>
+<div id="allseat" class="container">
+    {% if context %}
+        {% for i in context %}
+            {% if i.booked %}
+                <a ><img src="{% static 'media/icon/bookedseat.svg' %}" id="{{ i }}" style="width:40px;height:40px;cursor: not-allowed"alt=""></a>
+            {% else %}
+            <a onclick="clickme({{ i.unbooked }})"><img src="{% static 'media/icon/unbooked.svg' %}" id="{{ i.unbooked }}"
+                                               style="width:40px;height:40px;cursor: pointer" alt=""></a>
+            {% endif %}
+        {% endfor %}
+
+    {% endif %}
+</div>
+<br>
+<div class="text-center">
+    <button class="btn btn-outline-success w-50" onclick="submitseat()">Submit</button>
+</div>
+<script>
+    function clickme(i) {
+        var img1 = document.getElementById(i).src;
+        if (img1 == 'http://127.0.0.1:8000/static/media/icon/unbooked.svg') {
+            document.getElementById(i).src = 'http://127.0.0.1:8000/static/media/icon/selectseat.svg';
+            document.getElementById(i).classList.add("selected")
+        } else {
+            document.getElementById(i).src = 'http://127.0.0.1:8000/static/media/icon/unbooked.svg';
+            document.getElementById(i).classList.remove("selected")
+        }
+    }
+
+    function submitseat() {
+        var selected = document.getElementsByClassName("selected")
+        var arr = [];
+        for (var i = 0; i < selected.length; i++) {
+            arr.push(selected[i].id)
+        }
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState==4 && this.status==200){
+                var output = this.response;
+                if (output=='success'){
+                    alert('good')
+                }else{
+                    alert('not good')
+                }
+            }
+        };
+        xml.open('GET','seatselected?seat='+arr,true);
+        xml.send()
+    }
+</script>
+</body>
+</html>

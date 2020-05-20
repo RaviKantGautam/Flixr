@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="{% static 'img/logo.png' %}" type="image/png"
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <title>Flixr</title>
+    <style>
+        .main_btn2:hover{
+            color: blue !important;
+        }
+        .main_btn2{
+            color: white !important;
+        }
+    </style>
+</head>
+
+<body>
+
+{% include 'clientNavbar.html' %}
+<!--================Home Banner Area =================-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="banner_content text-center">
+                <h2>Product Checkout</h2>
+                <div class="page_link">
+                    <a href="/">Home</a>
+                    <a href="#">Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Home Banner Area =================-->
+
+<!--================Checkout Area =================-->
+<section class="checkout_area section_gap">
+    <div class="container">
+        <div class="billing_details">
+            <div class="row" style="background: #e8e7e7">
+                <div class="col-lg-8">
+                    <h2 class="p-3 text-center">Billing Details</h2>
+                    <form class="row contact_form" id="mycheckout" method="post">
+                        {% csrf_token %}
+
+                         <div class="col-md-12 form-group p_star">
+                            {#                            <label for="town" class="required">Town / City</label>#}
+                            <select id="town" name="town" class="country_select" data-rule-required="true">
+                                <option value="#">--Choose City--</option>
+                                <option value="Amritsar">Amritsar</option>
+                                <option value="Chandigarh">Chandigarh</option>
+                                <option value="Ludhiana">Ludhiana</option>
+                                <option value="Jalandhar">Jalandhar</option>
+                                <option value="Patiala">Patiala</option>
+                                <option value="Bathinda">Bathinda</option>
+                                <option value="Hoshiarpur">Hoshiarpur</option>
+                                <option value="Mohali">Mohali</option>
+                                <option value="Pathankot">Pathankot</option>
+                                <option value="Moga">Moga</option>
+                                <option value="Abohar">Abohar</option>
+                                <option value="Malerkotla">Malerkotla</option>
+                                <option value="Khanna">Khanna</option>
+                                <option value="Phagwara">Phagwara</option>
+                                <option value="Muktasar">Muktasar</option>
+                                <option value="Barnala">Barnala</option>
+                                <option value="Rajpura">Rajpura</option>
+                                <option value="Firozpur">Firozpur</option>
+                                <option value="Kapurthala">Kapurthala</option>
+                                <option value="Sunam">Sunam</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <textarea type="text" placeholder="Address Line" data-rule-required="true" class="form-control" id="add1" name="streetAddress"></textarea>
+{#                            <span class="placeholder" data-placeholder="Address line 01"></span>#}
+                        </div>
+
+
+                        <div class="col-md-12 form-group">
+                            {#                            <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP">#}
+                            <input type="text" class="form-control" id="zipcode"
+                                   data-rule-required="true"
+                                   minlength="1"
+                                   maxlength="6"
+                                   data-rule-maxlength="6"
+                                   data-msg-maxlength="Please enter valid zip/postal code"
+                                   placeholder="Postal code/ Zipcode Code" name="zipcode">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <textarea class="form-control" name="ordernote" id="message" rows="1"
+                                      placeholder="Order Notes"></textarea>
+                        </div>
+                        <input type="hidden" name="disemail" id="disemail" value="{{ request.session.client.clientEmail }}">
+                        <input type="hidden" name="disphone" id="disphone" value="{{ request.session.client.clientPhone }}">
+                        <input type="hidden" name="grandtotal" id="grandtotal" value="{{ grandtotal }}">
+                    </form>
+                </div>
+                <div class="col-lg-4">
+                    <div class="order_box">
+                        <h2>Your Order</h2>
+                        <ul class="list">
+                            <li>
+                                <a href="#">Product
+                                    <span>Total</span>
+                                </a>
+                            </li>
+                            {% if request.session.product %}
+                                {% for i in request.session.product %}
+                                    <li>
+                                        <a href="#">{{ i.1 }}
+                                            <span class="middle">x {{ i.9 }}</span>
+                                            <span class="last">&#8377; {{ i.10 }}</span>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+
+                            {% endif %}
+                        </ul>
+                        <ul class="list list_2">
+                            <li>
+                                <a href="#">Total
+                                    <span>&#8377; {{ grandtotal }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="payment_item">
+                            <div class="radion_btn">
+                                <input type="radio" checked id="f-option5" name="paymentmethod" value="cod">
+                                <label for="f-option5">COD(Cash on Delivery) Payment </label>
+                                <div class="check"></div>
+                            </div>
+                            <div class="radion_btn">
+                                <input type="radio" id="f-option6" name="paymentmethod" value="online">
+                                <label for="f-option6">Online Payment </label>
+                                <img src="{% static 'img/product/single-product/card.jpg' %}" alt="">
+                                <div class="check"></div>
+                            </div>
+                        </div>
+                        {% if request.session.client %}
+                            <a type="button" onclick="payment()"
+                               class="main_btn2" style="width: 100% !important;">
+                                Proceed to Pay
+                            </a>
+                        {% else %}
+                            <a href="clientLogin"
+                               class="main_btn2">
+                                Login First!
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include 'clientFooter.html' %}
+<script src="{% static 'myjs/checkout.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $('#mycheckout').validate();
+    })
+</script>
+</body>
+
+</html>

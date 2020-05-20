@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Theatre Login</title>
+    <link rel="stylesheet" href="{% static 'mycss/theatrelogin.css' %}">
+    {% include 'adminHeader.html' %}
+</head>
+<body>
+<div class="vid-container">
+  <video class="bgvid" autoplay="autoplay" muted="muted" preload="auto" loop>
+      <source src="{% static 'media/videobackground/theatrelogin.mp4' %}" type="video/mp4">
+  </video>
+  <div class="inner-container">
+    <video class="bgvid inner" autoplay="autoplay" muted="muted" preload="auto" loop>
+      <source src="{% static 'media/videobackground/theatrelogin.mp4' %}" type="video/mp4">
+    </video>
+    <div class="box">
+        <form action="theatrelogin" method="post">
+            {% csrf_token %}
+      <h1>Theatre Login</h1>
+      <input type="text" placeholder="Threatre ID" id="theatreid" name="theatreid">
+      <input type="password" placeholder="Password" id="password" name="password">
+      <button type="submit">Login</button>
+            </form>
+    </div>
+  </div>
+</div>
+{% if message %}
+    <script>
+    alert('{{ message }}')
+    </script>
+{% endif %}
+</body>
+</html>

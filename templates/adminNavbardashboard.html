@@ -1,0 +1,105 @@
+{% load static %}
+<div class="modal fade" tabindex="-1" role="dialog" id="mymodalchangepassword">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Admin Change Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="adminChangePassword" class="validate">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="password " class="h5">Old Password</label>
+                        <input type="password" class="form-control" id="opassw" name="opassw">
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="password" class="h5">New Password</label>
+                                <input type="password" class="form-control" id="npassw">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="cpassword" class="h5">Confirm Password</label>
+                                <input type="password" class="form-control" data-rule-equalto="#npassw"
+                                       name="npassw" data-msg-equalto="Please same Password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <input type="button" onclick="changeadminpassword()" value="Submit"
+                               class="btn btn-outline-primary w-50">
+                    </div>
+                    <div id="error"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading"><u>Movies & Merchandise </u></div>
+        <div class="list-group list-group-flush">
+            <a href="alladmin" class="list-group-item list-group-item-action bg-light">Home <span class="float-right"><i
+                    class="fa fa-home"></i></span></a>
+            <a href="movie" class="list-group-item list-group-item-action bg-light">Movies <span class="float-right"><i
+                    class="fa fa-film"></i></span></a>
+            <a href="show" class="list-group-item list-group-item-action bg-light">Shows <span class="float-right"><i
+                    class="fa fa-theater-masks"></i></span></a>
+            <a href="merchandise" class="list-group-item list-group-item-action bg-light">Merchandise <span
+                    class="float-right"><i class="fa fa-shopping-cart"></i></span></a>
+            {% if request.session.admin.type == 'Super-Admin' %}
+                <a href="adminview" class="list-group-item list-group-item-action bg-light">Admin Setting <span
+                        class="float-right"><i class="fa fa-user-secret"></i></span></a>
+            {% endif %}
+            <a href="#" data-toggle="modal" data-target="#mymodalchangepassword"
+               class="list-group-item list-group-item-action bg-light">Change Password <span class="float-right"><i
+                    class="fa fa-cog"></i></span></a>
+            <a href="adminlogout" class="list-group-item list-group-item-action bg-light">Logout <span
+                    class="float-right"><i class="fa fa-sign-out-alt"></i></span></a>
+
+        </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <button class="btn btn-primary" id="menu-toggle"><<</button>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-link">{{ request.session.admin.adminEmail }}</li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle btn btn-dark text-white" href="#" id="navbarDropdown"
+                           role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Setting
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            {% if request.session.admin.type == 'Super-Admin' %}
+                                <a class="dropdown-item drop" href="adminview">Admin Setting &nbsp;&nbsp;&nbsp;<i
+                                        class="fa fa-user-secret"></i></a>
+                            {% endif %}
+                            <a class="dropdown-item" data-toggle="modal" data-target="#mymodalchangepassword" href="#">Change
+                                Password</a>
+                            <hr class="bg-danger">
+                            <a class="dropdown-item" href="adminlogout">Logout <span class="float-right"><i
+                                    class="fa fa-sign-out-alt"></i></span></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">

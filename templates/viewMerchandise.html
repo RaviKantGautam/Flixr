@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>DashBoard</title>
+    {% include 'adminHeader.html' %}
+    <script>
+        function addadmin() {
+            $('#addadmin').slideToggle();
+        }
+    </script>
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+{% include 'adminNavbardashboard.html' %}
+<div class="display-4 font-weight-bold mt-3">Merchandise<span class="float-right"><button type="button"
+                                                                                          class="btn btn-info btn-lg"
+                                                                                          onclick="addadmin()">Add New</button></span>
+</div>
+<div id="addadmin" style="display: none">
+    <hr class="bg-danger">
+    <form action="addMerchandise" method="post" enctype="multipart/form-data" class="validate">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="title">Product Name</label>
+            <input type="text" autofocus id="productname" required name="productname" placeholder="Enter Product Name"
+                   class="form-control">
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="cast">Price</label>
+                    <input type="number" min="0" max="2000" required placeholder="Price" class="form-control"
+                           name="price"
+                           id="price">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="cast">Stock</label>
+                    <input type="number" required placeholder="Price" class="form-control" name="stock" id="price">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="rating">Movie's belongs to</label>
+                    <select name="movie" id="movie" class="form-control">
+                        {% if movie %}
+                            <optgroup label="Select movie"></optgroup>
+                            {% for i in movie %}
+                                <option value="{{ i.0 }}">{{ i.1 }}</option>
+                            {% endfor %}
+
+                            {% else %}
+                            <optgroup label="No Movies"></optgroup>
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-sm-12 form-group">
+            <label for="prodesc">Product Description</label>
+            <textarea class="form-control" placeholder="Product Description" name="prodesc" id="prodesc"></textarea>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <label for="photo1">Photo 1</label>
+                <div class="form-group text-center">
+                            <span class="m-2"><img src="https://atzcart.s3.ap-south-1.amazonaws.com/uploads/images/categories/default.png"
+                                                   alt="no image" style="width: 150px;height: 150px" id="img1"
+                                                   class="img-fluid p-2"></span>
+                    <span class="custom-file small" style="overflow: hidden">
+                            <label for="" id="labelimgname1" class="custom-file-label"></label>
+                            <input type="file" name="photo1" required onchange="readURL1(this)" id="file1"
+                                   class="custom-file-input"
+                                   accept=".jpg,.jpeg,.png">
+                        </span>
+                    <script>
+                        var file1 = document.getElementById("file1");
+                        var img1 = document.getElementById("img1");
+                        var labelimgname1 = document.getElementById("labelimgname1");
+
+                        function readURL1(input) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                img1.src = e.target.result;
+                                labelimgname1.innerHTML = input.files[0].name;
+                            };
+                            reader.readAsDataURL(input.files[0]);
+                        }
+                    </script>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label for="photo2">Photo 2</label>
+                <div class="form-group text-center">
+                    <span class="m-2"><img src="https://atzcart.s3.ap-south-1.amazonaws.com/uploads/images/categories/default.png"
+                                           alt="no image" style="width: 150px;height: 150px" id="img2"
+                                           class="img-fluid p-2"></span>
+                    <span class="custom-file small" style="overflow: hidden">
+                            <label for="" id="labelimgname2" class="custom-file-label"></label>
+                            <input type="file" name="photo2" required onchange="readURL2(this)" id="file2"
+                                   class="custom-file-input"
+                                   accept=".jpg,.jpeg,.png">
+                        </span>
+                    <script>
+                        var file2 = document.getElementById("file2");
+                        var img2 = document.getElementById("img2");
+                        var labelimgname2 = document.getElementById("labelimgname2");
+
+                        function readURL2(input) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                img2.src = e.target.result;
+                                labelimgname2.innerHTML = input.files[0].name;
+                            };
+                            reader.readAsDataURL(input.files[0]);
+                        }
+                    </script>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label for="photo3">Photo 3</label>
+                <div class="form-group text-center">
+                            <span class="m-2"><img src="https://atzcart.s3.ap-south-1.amazonaws.com/uploads/images/categories/default.png"
+                                                   alt="no image" style="width: 150px;height: 150px" id="img3"
+                                                   class="img-fluid p-2"></span>
+                    <span class="custom-file small" style="overflow: hidden">
+                            <label for="" id="labelimgname3" class="custom-file-label"></label>
+                            <input type="file" name="photo3" required onchange="readURL3(this)" id="file3"
+                                   class="custom-file-input"
+                                   accept=".jpg,.jpeg,.png">
+                        </span>
+                    <script>
+                        var file3 = document.getElementById("file3");
+                        var img3 = document.getElementById("img3");
+                        var labelimgname3 = document.getElementById("labelimgname3");
+
+                        function readURL3(input) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                img3.src = e.target.result;
+                                labelimgname3.innerHTML = input.files[0].name;
+                            };
+                            reader.readAsDataURL(input.files[0]);
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="form-group text-center">
+            <input type="submit" value="SUBMIT" class="btn w-50 btn-primary p-3 m-2 badge-pill"
+                   style="background: linear-gradient(45deg,#0000ff,transparent)">
+        </div>
+    </form>
+</div>
+<hr class="bg-danger">
+<table class="table table-bordered table-hover myTable">
+    <thead class="thead-dark">
+    <tr>
+        <th>ID</th>
+        <th>PRODUCT NAME</th>
+        <th>PRICE</th>
+        <th>MOVIE</th>
+        <th>PHOTO 1</th>
+        <th>PHOTO 2</th>
+        <th>PHOTO 3</th>
+        <th>ACTION</th>
+        {#            <th>DELETE</th>#}
+    </tr>
+    </thead>
+    <tbody>
+    {% if ar %}
+        {% for row in ar %}
+            <tr>
+                <td>{{ row.productid }}</td>
+                <td>{{ row.productname }}</td>
+                <td>{{ row.price }}</td>
+                <td>{{ row.movieid }}</td>
+                <td><a href="static/media/{{ row.photo1 }}" data-lightbox="image-1"
+                       data-title="{{ row.productid }}"><img src="{% static '/media/' %}{{ row.photo1 }}" width="100"
+                                                             height="100" class="img-fluid"></a></td>
+                <td><a href="static/media/{{ row.photo2 }}" data-lightbox="image-1"
+                       data-title="{{ row.productid }}"><img src="{% static '/media/' %}{{ row.photo2 }}" width="100"
+                                                             height="100" class="img-fluid"></a></td>
+                <td><a href="static/media/{{ row.photo3 }}" data-lightbox="image-1"
+                       data-title="{{ row.productid }}"><img src="{% static '/media/' %}{{ row.photo3 }}" width="100"
+                                                             height="100" class="img-fluid"></a></td>
+                <td class="text-center"><a onclick="deleteMerchandise('{{ row.productid }}','{{ row.productname }}')"><i
+                        class="fa fa-trash text-danger"></i></a></td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <td class="display-4 text-center font-weight-bolder" colspan="9">Nothing to Show!</td>
+    {% endif %}
+    </tbody>
+</table>
+{% if message %}
+    <script>alert('{{ message }}')</script>
+{% endif %}
+{% include 'adminNavbarfoot.html' %}
+<script src="{% static 'myjs/adminjs.js' %}"></script>
+</body>
+</html>

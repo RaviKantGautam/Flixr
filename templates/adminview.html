@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>DashBoard</title>
+    {% include 'adminHeader.html' %}
+    <script>
+        function addadmin() {
+            $('#addadmin').slideToggle();
+        }
+    </script>
+
+</head>
+<body>
+{% include 'adminNavbardashboard.html' %}
+<div class="display-4 font-weight-bold mt-3">Admin View <span class="float-right"><button type="button"
+                                                                                          class="btn btn-info btn-lg"
+                                                                                          onclick="addadmin()">Add New</button></span>
+</div>
+<div id="addadmin" style="display: none">
+    <hr class="bg-danger">
+    <form method="post" id="adminRegisteration">
+        {% csrf_token %}
+        <div id="erroradminsubmit"></div>
+        <br>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" name="email" autofocus required>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="passw">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="cpassword">Confirm Password</label>
+                    <input type="password" class="form-control" data-rule-equalto="#passw" required name="passw">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="fname">Type</label>
+                    <select name="fname" class="form-control">
+                        <optgroup label="Select Type"></optgroup>
+                        <option value="Admin">Admin</option>
+                        <option value="Super-Admin">Super-Admin</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="mobile">Mobile</label>
+                    <input type="tel" minlength="10" maxlength="10" class="form-control" name="mobile" required>
+                </div>
+            </div>
+        </div>
+        <div class="form-group text-center">
+            <input type="button" onclick="submitadmin()" value="Submit" class="btn w-50"
+                   style="background: linear-gradient(rgba(72,117,234,0.81),white);opacity: 1">
+        </div>
+
+    </form>
+</div>
+<hr class="bg-danger">
+<table class="table table-bordered myTable display table-hover" style="background: rgba(255,255,255,0.59)">
+    <thead class="thead-dark">
+    <tr class="text-center">
+        <th scope="col">#</th>
+        <th scope="col">Email</th>
+        <th scope="col">Type</th>
+        <th scope="col">Mobile</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for i in context %}
+        <tr>
+            <td>{{ i.srno }}</td>
+            <td>{{ i.email }}</td>
+            <td>{{ i.type }}</td>
+            <td>{{ i.mobile }}</td>
+            <td class="text-center">
+                {% if i.email == request.session.admin.adminEmail %}
+                    <button type="button" class="btn btn-secondary" style="cursor: not-allowed"><i
+                            class="fa fa-trash"></i>
+                    </button>
+                    <button type="button" class="btn btn-secondary" style="cursor: not-allowed"><i
+                            class="fa fa-edit"></i>
+                    </button>
+                {% else %}
+                    <button type="button" class="btn btn-outline-danger" onclick="deleteadmin('{{ i.email }}')">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" onclick="updatemodel({{ i }})"><i
+                            class="fa fa-edit"></i>
+                    </button>
+                {% endif %}
+
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="modal fade" id="updateadminmodel" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Admin Update</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="myform">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" readonly class="form-control" name="email" id="email" autofocus
+                               data-rule-required="true">
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="fname">Type</label>
+                                {#                                <input type="text" class="form-control" id="fname" name="fname" data-rule-required>#}
+                                <select name="fname" id="fname" class="form-control">
+                                    <optgroup label="Select Type"></optgroup>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Super-Admin">Super-Admin</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="mobile">Mobile</label>
+                                <input type="tel" class="form-control" id="mobile" name="mobile" data-rule-required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <input type="button" onclick="updateAdmin()" value="Submit"
+                               class="btn btn-outline-primary w-50">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#adminRegisteration').validate();
+</script>
+{% include 'adminNavbarfoot.html' %}
+<script src="{% static 'myjs/adminjs.js' %}"></script>
+</body>
+</html>

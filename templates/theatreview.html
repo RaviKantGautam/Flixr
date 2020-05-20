@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {% include 'adminHeader.html' %}
+    <title>Theatre View</title>
+    <style>
+        td input[type=text],td input[type=number] {
+            background: transparent !important;
+            border: transparent !important;
+        }
+    </style>
+</head>
+<body style="background: rgba(174,104,0,0.15)">
+{% include 'theatrenavbar.html' %}
+<div class="container p-2 rounded mt-5"
+     style="box-shadow: -10px 0 30px black;background: linear-gradient(white 70%,#d7e6ff)">
+    <div class="m-3 text-center">
+        <h1>Add Tickets</h1>
+        <form id="addticketcatgory" method="post" class="p-4 w-100"
+              style="border: 3px double orangered;display: inline-block">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-4">
+                    <input type="text" name="categoryname" id="categoryname" placeholder="Category Name"
+                           class="form-control">
+                </div>
+                <div class="col-sm-4">
+                    <input type="number" min="1" max="1000" name="price" id="price" placeholder="Price Tag &#8377;"
+                           class="form-control">
+                </div>
+                <div class="col-sm-4 text-left">
+                    <input type="button" class="btn btn-outline-primary w-75" onclick="addticketsubmit()"
+                           value=">> SUBMIT >>"></div>
+            </div>
+            <div id="addticketerror"></div>
+        </form>
+    </div>
+    <table class="table table-bordered text-center">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Category Name</th>
+            <th scope="col">Price</th>
+            <th scope="col" colspan="2">Action</th>
+        </tr>
+        </thead>
+        <tbody id="tabledata"></tbody>
+    </table>
+</div>
+{% include 'adminNavbarfoot.html' %}
+<script src="{% static 'myjs/theatreview.js' %}"></script>
+</body>
+</html>

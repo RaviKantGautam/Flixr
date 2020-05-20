@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="{% static 'img/logo.png' %}" type="image/png"
+    <title>Flixr</title>
+</head>
+
+<body>
+
+{% include 'clientNavbar.html' %}
+<!--================Home Banner Area =================-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content text-center">
+                <h2>My Account</h2>
+                <div class="page_link">
+                    <a href="/">Home</a>
+                    <a href="#">Confirmation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Home Banner Area =================-->
+
+<!--================Order Details Area =================-->
+<section class="order_details p_120">
+    <div class="container">
+        <div class="order_details_table">
+            <h2>Order Details</h2>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Sr. No.</th>
+                        <th scope="col">Billid</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Payment Method</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Zipcode</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">View Detail</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in context %}
+                        <tr>
+                            <td>
+                                <p>{{ i.srno }}</p>
+                            </td>
+                            <td>
+                                <h5>{{ i.billid }}</h5>
+                            </td>
+                            <td>
+                                <h5>{{ i.billtime }}</h5>
+                            </td>
+                            <td>
+                                <h5>{{ i.grandtotal }}</h5>
+                            </td>
+                            <td>
+                                <h5>{{ i.paymentmethod }}</h5>
+                            </td>
+                            <td>
+                                <h5>{{ i.address }}, {{ i.city }}</h5>
+                            </td>
+                            <td>
+                                <h5>{{ i.zipcode }}</h5>
+                            </td>
+                            <td>
+                                <h5>{{ i.status }}</h5>
+                            </td>
+                            <td><a class="btn btn-outline-warning"
+                                   href="cientproductdetail?billid={{ i.billid }}">View</a></td>
+                            <td>
+                                {% if i.status == 'pending' %}
+                                    <button type="button" class="btn btn-outline-danger"
+                                            onclick="cancelledmodal('{{ i.billid }}')">Cancelled Order
+                                    </button>
+                                {% else %}
+                                    <button type="button" class="btn btn-secondary">Cancelled Order</button>
+
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <button class="main_btn2" onclick="window.location.href='/'"><< Continue Shopping</button>
+        </div>
+    </div>
+</section>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title mx-auto text-danger font-weight-bolder">Cancel Order</h1>
+            </div>
+            <form action="#" method="get">
+                <div class="modal-body">
+                    <input type="hidden" name="billid" id="billid">
+                    <div class="form-group">
+                        <label for="#" class="h2">Remarks/Reason</label>
+                        <textarea name="remarks" id="remarks" class="form-control" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" onclick="cancelledorder()" value="Submit" class="btn btn-outline-primary">
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<script>
+    function cancelledmodal(billid) {
+        $('#billid').val(billid);
+        $("#myModal").modal('show');
+    }
+
+    function cancelledorder() {
+        var xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                // alert(this.response);
+                $("#myModal").modal('hide');
+                window.location.href = 'myaccount'
+            }
+        };
+        xml.open('GET', 'cancelledorder?billid=' + $('#billid').val() + "&remarks=" + $('#remarks').val(), true);
+        xml.send();
+    }
+</script>
+{% include 'clientFooter.html' %}
+
+</body>
+
+</html>
